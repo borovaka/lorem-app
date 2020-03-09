@@ -1,0 +1,24 @@
+version: '3.1'
+services:
+  php:
+    build:
+      context: .
+      dockerfile: Dockerfile.php
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.nginx
+    ports:
+      - "8081:80"
+    environment:
+      - PHP_CONTAINER_NAME=php
+  
+  cache:
+    build:
+      context: .
+      dockerfile: Dockerfile.cache
+    ports:
+      - "8080:80"
+    environment:
+      - ORIGIN_NAME=web
